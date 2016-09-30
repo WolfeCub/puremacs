@@ -48,21 +48,24 @@
     (setq ido-everywhere t)
     (ido-mode 1))
 
+(use-package ido-ubiquitous
+  :config
+  (ido-ubiquitous-mode 1))
+
 ;; Nicer Completion in M-x
 (use-package smex
-    :ensure t
-    :config
-    (defadvice smex (around space-inserts-hyphen activate compile)
-        (let ((ido-cannot-complete-command 
-                `(lambda ()
-                    (interactive)
-                    (if (string= " " (this-command-keys))
-                        (insert ?-)
-                    (funcall ,ido-cannot-complete-command)))))
-            ad-do-it))
-    (global-set-key (kbd "M-x") 'smex)
-    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)) ;; This is your old M-x.
+  :config
+  (defadvice smex (around space-inserts-hyphen activate compile)
+    (let ((ido-cannot-complete-command 
+           `(lambda ()
+              (interactive)
+              (if (string= " " (this-command-keys))
+                  (insert ?-)
+                (funcall ,ido-cannot-complete-command)))))
+      ad-do-it))
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)) ;; This is your old M-x.
 
 ;; Backup options
 (setq backup-by-copying t) ; Stop shinanigans with links
