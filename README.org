@@ -20,8 +20,12 @@ Dotfiles for learning emacs without git
 *** ido
     For nicer completion and option selection
 
+    [[ido][file:http://i.imgur.com/VBHYTj8.jpg]]
+
 *** smex
     For ido in the `M-x` buffer
+
+    [[smex][file:http://i.imgur.com/iw3gUPU.jpg]]
 
 *** ido-complete-space-or-hyphen
     Inserts a hyphen/space if any of the possible completion candidates have a hyphen/space when autocompleting using ido/smex.
@@ -29,8 +33,12 @@ Dotfiles for learning emacs without git
 *** expand-region
     Intelligently increases selected region using code syntax as guides.
 
+    [[expandregion][file:http://i.imgur.com/ieX2sDR.jpg]]
+
 *** magit
     Git percelen inside of emacs
 
 *** org-bullets
     Shows nice bullets in org mode instead of just asterisks
+    
+    [[org-bullets][file:http://i.imgur.com/8w3Qwgd.jpg]]
