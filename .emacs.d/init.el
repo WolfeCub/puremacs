@@ -31,6 +31,9 @@
 (fset 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
 (setq-default indent-tabs-mode nil)
 
+;; Org Settings
+(setq org-pretty-entities t)
+
 ;; Theme
 (use-package doom-themes
   :config
@@ -68,7 +71,9 @@
   (global-set-key (kbd "C-=") 'er/expand-region))
 
 ;; Git porcelen
-(use-package magit)
+(use-package magit
+  :config
+  (global-set-key "\C-x\g" 'magit-status))
 
 ;; Better looking org headers
 (use-package org-bullets
