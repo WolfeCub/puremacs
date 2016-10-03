@@ -60,7 +60,20 @@
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)) ;; This is your old M-x.
 
+;; Intelligently chooses between a space or hyphen when using ido
 (use-package ido-complete-space-or-hyphen)
+
+(use-package expand-region
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
+
+;; Git porcelen
+(use-package magit)
+
+;; Better looking org headers
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 ;; Backup options
 (setq backup-by-copying t) ; Stop shinanigans with links
