@@ -51,3 +51,5 @@ Dotfiles for learning emacs without git
     After pressing =Ctrl-c <SPACE>= and then typing the first letter of a word (in this case =m=)
 
     [[ace-jump-2][file:https://s15.postimg.org/uh7612v97/acejump2.jpg]]
+
+    After pressing the red letter corresponding to the word you wish to jump to your cursor will move to the beginning of that word.
