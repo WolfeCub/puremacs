@@ -48,6 +48,6 @@ Dotfiles for learning emacs without git
     
     [[ace-jump-1][file:http://i.imgur.com/WjvrLff.jpg]]
 
-    After pressing `Ctrl-c <SPACE>` and then typing the first letter of a word (in this case `m`)
+    After pressing =Ctrl-c <SPACE>= and then typing the first letter of a word (in this case =m=)
 
     [[ace-jump-2][file:https://s15.postimg.org/uh7612v97/acejump2.jpg]]
