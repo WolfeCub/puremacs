@@ -42,3 +42,10 @@ Dotfiles for learning emacs without git
     Shows nice bullets in org mode instead of just asterisks
     
     [[org-bullets][file:http://i.imgur.com/8w3Qwgd.jpg]]
+
+*** ace-jump-mode
+    Allows you to easily jump to any word visible on your screen
+    
+    [[ace-jump-1][file:http://i.imgur.com/WjvrLff.jpg]]
+    After pressing `Ctrl-c <SPACE>` and then typing the first letter of a word (in this case `m`)
+    [[ace-jump-2][file:https://s15.postimg.org/uh7612v97/acejump2.jpg]]
