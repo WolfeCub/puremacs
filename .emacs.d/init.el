@@ -29,7 +29,8 @@
 (electric-pair-mode t) ; Add closing pairs automatically
 (setq initial-scratch-message "") ; No scratch text
 (fset 'yes-or-no-p 'y-or-n-p) ; y/n instead of yes/no
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil) ; Spaces instead of tabs
+(delete-selection-mode 1) ; Typing with text selected replaces
 
 ;; Org Settings
 (setq org-pretty-entities t)
@@ -80,13 +81,44 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+;; Easy jumping around visible text in buffer
 (use-package ace-jump-mode
   :config
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
+(use-package spaceline-config
+  :ensure spaceline
+  :config
+  (spaceline-emacs-theme))
+
+(use-package neotree
+  :config
+  (global-set-key [f8] 'neotree-toggle))
+
+;; Autocompletion framework
+(use-package company
+  :init
+  (global-company-mode)
+  :config
+  (setq company-idle-delay 0) ; Delay to complete
+  (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t) ; Loops around suggestions
+  (define-key company-active-map [tab] 'company-select-next) ; Tab to cycle forward
+  ;; Inherits colors from theme to style autocomplete menu correctly
+  (require 'color)
+  (let ((bg (face-attribute 'default :background)))
+    (custom-set-faces
+     `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+     `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+     `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+     `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+     `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
+
 ;; Backup options
 (setq backup-by-copying t) ; Stop shinanigans with links
 (setq backup-directory-alist '((".*" . "~/.bak.emacs/backup/")))
+(if (eq nil (file-exists-p "~/.bak.emacs/")) ; Creates .bak.emacs directory if it doesn't already exist
+    (make-directory "~/.bak.emacs/"))
 (if (eq nil (file-exists-p "~/.bak.emacs/auto")) ; Creates auto directory if it doesn't already exist
     (make-directory "~/.bak.emacs/auto"))
 (setq auto-save-file-name-transforms '((".*" "~/.bak.emacs/auto/" t))) ; backup in one place. flat, no tree structure
