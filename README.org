@@ -1,4 +1,8 @@
-* Config
+* Puremacs
+
+Dotfiles for learning emacs without evil mode
+
+[[puremacs][file:http://i.imgur.com/4LWWsy5.jpg]]
 
 ** Package management
 
@@ -76,6 +80,9 @@ set src font natively so that I can have syntax highlighting in source blocks.
 
 *** Org Bullets
 
+[[org-bullets][file:http://i.imgur.com/8w3Qwgd.jpg]]
+
+
 Org bullets allows for nicely formatted bullets instead of asteriks' in org mode.
 
 #+begin_src emacs-lisp :tangle yes 
@@ -87,6 +94,8 @@ Org bullets allows for nicely formatted bullets instead of asteriks' in org mode
 
 ** Packages
 *** Ido
+
+[[ido][file:http://i.imgur.com/VBHYTj8.jpg]]
 
 [[https://www.gnu.org/software/emacs/manual/ido.html][ido]] is my go-to minibuffer completion. It makes it super easy to navigate around the
 minibuffer. I bind tab to cycle through the matches and I have fuzzy matching on as
@@ -115,6 +124,9 @@ completion candidates.
 
 *** Smex
 
+[[smex][file:http://i.imgur.com/iw3gUPU.jpg]]
+
+
 [[https://github.com/nonsequitur/smex][Smex]] uses ido for =M-x=. I like this for all the same reasons I like ido. Easy command
 completion.
 
@@ -127,6 +139,8 @@ completion.
 #+end_src
 
 *** Expand Region
+
+[[expandregion][file:http://i.imgur.com/ieX2sDR.jpg]]
 
 [[https://github.com/magnars/expand-region.el][Expand reigon]] allows selection by syntastic region. So if I had an expression like this:
 =(setq some-var "a string o|f chars")= with mu cusor where the =|= is. Pressing =C-==
@@ -154,6 +168,8 @@ displays all the information very nicely.
 #+end_src
 
 *** Ace Jump Mode
+
+[[ace-jump-1][file:http://i.imgur.com/WjvrLff.jpg]][[ace-jump-2][file:https://s15.postimg.org/uh7612v97/acejump2.jpg]]
 
 [[https://github.com/winterTTr/ace-jump-mode][Ace jump mode]] allows for easy movement around the buffer. It allows you to specify a character
 or the first word of a character. It then dims the buffer and replaces the specified chars
