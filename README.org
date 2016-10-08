@@ -1,55 +1,270 @@
-* puremacs
+* Config
 
-Dotfiles for learning emacs without git
+** Package management
 
-[[puremacs][file:http://i.imgur.com/4LWWsy5.jpg]]
+Here I set up basic package control. I add melpa, melpa-stable and org to my sources 
+and then initialize the package.
 
-** Currently Using
+#+begin_src emacs-lisp :tangle yes
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(setq package-enable-at-startup nil)
+(package-initialize)
+#+end_src
 
-*** Miscellaneous Settings
-    No menus, start screen, tool bars or menu bar.
-    Auto matching and highlighting parens.
-    Spaces instead of tabs.
+I use [[https://github.com/jwiegley/use-package][use-package]] for my package management. It makes it very simple to automatically 
+install packages on a new system. It also allows packages to fail while still loading 
+the remainder of your config file.
 
-*** use-package
-    For package management and auto installation
+#+begin_src emacs-lisp :tangle yes
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+end_src
 
-*** doom-themes
-    For an atom one like theme for emacs
+** Essential Settings
 
-*** ido
-    For nicer completion and option selection
+Essential settings contains mostly quality of life changes. I disable the welcome
+screen as well as the welcome message in the minibuffer. I also disable the tool bar,
+scroll bar and menu bar. Matching parens are shown when highlighted. The scratch
+buffer is blank by default. I also set =yes-or-no-p= so that I only have to press =y=
+stead of typing =yes<RET>= when prompted. Use spaces instead of tabs. If I try and 
+input text with a visual selection it replaces the visual selection. Personally I'm
+partial to the Fira (I like Inconsolata as well) here I check if the font group is
+installed before setting the font to stop any errors.
 
-    [[ido][file:http://i.imgur.com/VBHYTj8.jpg]]
+#+begin_src emacs-lisp :tangle yes 
+(setq inhibit-splash-screen t
+    inhibit-startup-message t
+    inhibit-startup-echo-area-message t)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(show-paren-mode t)
+(setq initial-scratch-message "")
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq-default indent-tabs-mode nil)
+(delete-selection-mode 1)
+(when (member "Inconsolata" (font-family-list))
+  (add-to-list 'default-frame-alist '(font . "Inconsolata-12" ))
+  (set-face-attribute 'default t :font "Inconsolata-12"))
+#+end_src
 
-*** smex
-    For ido in the `M-x` buffer
+Currently I'm using [[https://github.com/hlissner/emacs-doom-theme][doom themes]] but I'm also a fan of [[https://github.com/owainlewis/emacs-color-themes][sublime themes]]'s Spolsky.
 
-    [[smex][file:http://i.imgur.com/iw3gUPU.jpg]]
+#+begin_src emacs-lisp :tangle yes
+;; Theme
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one t))
+#+end_src
 
-*** ido-complete-space-or-hyphen
-    Inserts a hyphen/space if any of the possible completion candidates have a hyphen/space when autocompleting using ido/smex.
+** Org Settings
 
-*** expand-region
-    Intelligently increases selected region using code syntax as guides.
+I'm still getting into org mode so my settings are very basic. I enable entities so
+I can type =\= followed by something like =alpha= and get the UTF-8 char \alpha. I also
+set src font natively so that I can have syntax highlighting in source blocks.
 
-    [[expandregion][file:http://i.imgur.com/ieX2sDR.jpg]]
+#+begin_src emacs-lisp :tangle yes 
+(setq org-pretty-entities t
+      org-src-fontify-natively t)
+#+end_src
 
-*** magit
-    Git percelen inside of emacs
+*** Org Bullets
 
-*** org-bullets
-    Shows nice bullets in org mode instead of just asterisks
-    
-    [[org-bullets][file:http://i.imgur.com/8w3Qwgd.jpg]]
+Org bullets allows for nicely formatted bullets instead of asteriks' in org mode.
 
-*** ace-jump-mode
-    Allows you to easily jump to any word visible on your screen
-    
-    [[ace-jump-1][file:http://i.imgur.com/WjvrLff.jpg]]
+#+begin_src emacs-lisp :tangle yes 
+;; Better looking org headers
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
 
-    After pressing =Ctrl-c <SPACE>= and then typing the first letter of a word (in this case =m=)
+** Packages
+*** Ido
 
-    [[ace-jump-2][file:https://s15.postimg.org/uh7612v97/acejump2.jpg]]
+[[https://www.gnu.org/software/emacs/manual/ido.html][ido]] is my go-to minibuffer completion. It makes it super easy to navigate around the
+minibuffer. I bind tab to cycle through the matches and I have fuzzy matching on as
+well. I use [[https://github.com/DarwinAwardWinner/ido-ubiquitous][ido-ubiquitous]] so that I can use ido everywhere possible. Finally I have
+[[https://github.com/doitian/ido-complete-space-or-hyphen][ido-complete-space-or-hyphen]] which intelligently inserts a space or hyphen based on
+completion candidates.
 
-    After pressing the red letter corresponding to the word you wish to jump to your cursor will move to the beginning of that word.
+#+begin_src emacs-lisp :tangle yes 
+(use-package ido
+    :init
+    (defun my-ido-keys ()
+        "Add keybindings for ido"
+        (define-key ido-completion-map [tab] 'ido-next-match))
+    (add-hook 'ido-setup-hook #'my-ido-keys)
+    :config
+    (setq ido-enable-flex-matching t)
+    (setq ido-everywhere t)
+    (ido-mode 1))
+
+(use-package ido-ubiquitous
+  :config
+  (ido-ubiquitous-mode 1))
+
+(use-package ido-complete-space-or-hyphen)
+#+end_src
+
+*** Smex
+
+[[https://github.com/nonsequitur/smex][Smex]] uses ido for =M-x=. I like this for all the same reasons I like ido. Easy command
+completion.
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package smex
+  :config
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+#+end_src
+
+*** Expand Region
+
+[[https://github.com/magnars/expand-region.el][Expand reigon]] allows selection by syntastic region. So if I had an expression like this:
+=(setq some-var "a string o|f chars")= with mu cusor where the =|= is. Pressing =C-==
+enables the mode and selects the word =of=. Then if I press =+= it would select the 
+contents in the quotes. Pressing =+= again would then select everything inside the 
+quotes and the quotes themselves and so on. Pressing =-= at will do the opposite and
+shrink the select region.
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package expand-region
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
+#+end_src
+
+*** Magit
+
+[[https://magit.vc/][Magit]] is a fantastic git porcelen inside of emacs. It allows you to do all of the things
+you could do from the git command line from within emacs. It has mneumonic keybindings and
+displays all the information very nicely. 
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package magit
+  :config
+  (global-set-key "\C-x\g" 'magit-status))
+#+end_src
+
+*** Ace Jump Mode
+
+[[https://github.com/winterTTr/ace-jump-mode][Ace jump mode]] allows for easy movement around the buffer. It allows you to specify a character
+or the first word of a character. It then dims the buffer and replaces the specified chars
+with a red letter. You can then press one of the letters  to jump to the corresponding
+character.
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package ace-jump-mode
+  :config
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
+#+end_src
+
+*** Spaceline
+
+[[https://github.com/TheBB/spaceline][Spaceline]] is a modeline replacement that makes the modeline slightly more appealing to 
+the eye. It also has built in compatability with a large range of additional packages.
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package spaceline-config
+  :ensure spaceline
+  :pin melpa-stable
+  :config
+  (spaceline-emacs-theme))
+#+end_src
+
+*** Neotree
+
+[[https://www.emacswiki.org/emacs/NeoTree][Neotree]] is a file tree display which is similar to the ones found in other popular text
+editors and IDEs (such as Sublime, Atom, Eclipse or nerdTREE if you use vim). It allows
+you to neatly view your file structure at the side of your screen.    
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package neotree
+  :config
+  (global-set-key [f8] 'neotree-toggle))
+#+end_src
+
+** Company Mode
+
+[[http://company-mode.github.io/][Company]] is an autocompletion framwork that supports user written backends. This means
+that the number of languages company (and supporting packages) encompass is very
+impressive.
+
+I have set the delay that company waits before completing to 0 and I also have it 
+configured so that company begins completing after you type a single character. I also
+set the completion list to wrap around so you can cycle through all of the completion
+candidates. I've bound tab to move to the next completion candidate.
+
+The custom faces inherit the colors from your loaded theme and match the company drop
+down. This allows me to change themes without worrying that company will look terrible.
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package company
+  :init
+  (global-company-mode)
+  :config
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 1)
+  (setq company-selection-wrap-around t)
+  (define-key company-active-map [tab] 'company-select-next)
+
+  (require 'color)
+  (let ((bg (face-attribute 'default :background)))
+    (custom-set-faces
+     `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+     `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+     `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+     `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+     `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
+#+end_src
+
+** Backup Options
+
+The default options for filebackups and autosave are terrible and leave files scattered
+all across your file system. First I make all backups copy the files which stops any
+shinanigans with links. I also set the backup directory. Then I check if =~/.bak.emacs/=
+and =~/.bak.emacs/backup/= exit if they don't I create them. Then I set my auto save 
+location to =~/.bak.emacs/auto/= and set it so that the files are are all saved in auto
+with a flat structure rather rather than folder trees.
+
+#+begin_src emacs-lisp :tangle yes 
+(setq backup-by-copying t)
+(setq backup-directory-alist '((".*" . "~/.bak.emacs/backup/")))
+(if (eq nil (file-exists-p "~/.bak.emacs/"))
+    (make-directory "~/.bak.emacs/"))
+(if (eq nil (file-exists-p "~/.bak.emacs/auto"))
+    (make-directory "~/.bak.emacs/auto"))
+(setq auto-save-file-name-transforms '((".*" "~/.bak.emacs/auto/" t)))
+#+end_src
+
+** Emacs Customize
+
+Here is the emacs auto-generated variable which I leave alone.
+
+#+begin_src emacs-lisp :tangle yes 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (company neotree spaceline web-mode use-package tablist smex s powerline php+-mode org-bullets magit let-alist ido-ubiquitous ido-complete-space-or-hyphen haskell-mode expand-region doom-themes ace-jump-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-scrollbar-bg ((t (:background "#343e48"))))
+ '(company-scrollbar-fg ((t (:background "#293139"))))
+ '(company-tooltip ((t (:inherit default :background "#232a30"))))
+ '(company-tooltip-common ((t (:inherit font-lock-constant-face))))
+ '(company-tooltip-selection ((t (:inherit font-lock-function-name-face)))))
+#+end_src
