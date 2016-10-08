@@ -186,6 +186,8 @@ character.
 
 *** Spaceline
 
+[[spaceline][file:http://i.imgur.com/uMooKJj.jpg]]
+
 [[https://github.com/TheBB/spaceline][Spaceline]] is a modeline replacement that makes the modeline slightly more appealing to 
 the eye. It also has built in compatability with a large range of additional packages.
 
@@ -199,6 +201,8 @@ the eye. It also has built in compatability with a large range of additional pac
 
 *** Neotree
 
+[[neotree][file:http://i.imgur.com/IhRePTI.jpg]]
+
 [[https://www.emacswiki.org/emacs/NeoTree][Neotree]] is a file tree display which is similar to the ones found in other popular text
 editors and IDEs (such as Sublime, Atom, Eclipse or nerdTREE if you use vim). It allows
 you to neatly view your file structure at the side of your screen.    
@@ -210,6 +214,8 @@ you to neatly view your file structure at the side of your screen.
 #+end_src
 
 ** Company Mode
+
+[[company][file:http://i.imgur.com/VHZzzXI.jpg]]
 
 [[http://company-mode.github.io/][Company]] is an autocompletion framwork that supports user written backends. This means
 that the number of languages company (and supporting packages) encompass is very
