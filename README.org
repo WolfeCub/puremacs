@@ -181,7 +181,7 @@ character.
 #+begin_src emacs-lisp :tangle yes 
 (use-package ace-jump-mode
   :config
-  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
+  (define-key global-map (kbd "C-c C-SPC") 'ace-jump-mode))
 #+end_src
 
 *** Spaceline
@@ -247,6 +247,20 @@ down. This allows me to change themes without worrying that company will look te
      `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
      `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
      `(company-tooltip-common ((t (:inherit font-lock-constant-face)))))))
+#+end_src
+
+*** Company Quickhelp
+
+[[quickhelp][file:http://i.imgur.com/7mvXbqe.jpg]]
+
+[[https://github.com/expez/company-quickhelp][Company quickhelp]] mimics the functionality of autocomplete and displays the documentation
+of the currently highlighted completion (after a brief delay). This is quite handy as it
+makes it easy to check the arguments or return type of the function.
+
+#+begin_src emacs-lisp :tangle yes
+(use-package company-quickhelp
+  :config
+  (company-quickhelp-mode 1))
 #+end_src
 
 ** Backup Options
