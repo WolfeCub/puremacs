@@ -2,7 +2,7 @@
 
 Dotfiles for learning emacs without evil mode
 
-[[puremacs][file:http://imgur.com/97Ax7Vv.jpg]]
+[[http://i.imgur.com/97Ax7Vv.jpg][file:http://i.imgur.com/97Ax7Vv.jpg]]
 
 ** Package management
 
