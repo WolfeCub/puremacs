@@ -43,8 +43,8 @@ installed before setting the font to stop any errors.
 
 #+begin_src emacs-lisp :tangle yes 
 (setq inhibit-splash-screen t
-    inhibit-startup-message t
-    inhibit-startup-echo-area-message t)
+      inhibit-startup-message t
+      inhibit-startup-echo-area-message "wolfe")
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
