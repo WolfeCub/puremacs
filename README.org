@@ -2,7 +2,7 @@
 
 Dotfiles for learning emacs without evil mode
 
-[[puremacs][file:http://i.imgur.com/4LWWsy5.jpg]]
+[[puremacs][file:http://imgur.com/97Ax7Vv.jpg]]
 
 ** Package management
 
@@ -58,7 +58,10 @@ installed before setting the font to stop any errors.
   (set-face-attribute 'default t :font "Inconsolata-13"))
 #+end_src
 
-Currently I'm using [[https://github.com/hlissner/emacs-doom-theme][doom themes]] but I'm also a fan of [[https://github.com/owainlewis/emacs-color-themes][sublime themes]]'s Spolsky.
+Currently I'm using [[https://github.com/hlissner/emacs-doom-theme][doom themes]] (I usually swap between doom-one and doom-molokai
+depending on how I'm feeling that day). I'm also a fan of [[https://github.com/owainlewis/emacs-color-themes][sublime themes]]'s Spolsky.
+If you're planning to swap this theme out for your own make sure to remove the 
+accompanying neotree theme enabled lower down in [[Neotree]].
 
 #+begin_src emacs-lisp :tangle yes
 ;; Theme
