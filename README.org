@@ -71,11 +71,16 @@ Currently I'm using [[https://github.com/hlissner/emacs-doom-theme][doom themes]
 
 I'm still getting into org mode so my settings are very basic. I enable entities so
 I can type =\= followed by something like =alpha= and get the UTF-8 char \alpha. I also
-set src font natively so that I can have syntax highlighting in source blocks.
+set src font natively so that I can have syntax highlighting in source blocks. I
+also do some fontify stuff to make my theme look better (as suggested on the doom
+theme's github).
 
 #+begin_src emacs-lisp :tangle yes 
 (setq org-pretty-entities t
-      org-src-fontify-natively t)
+      org-src-fontify-natively t
+      org-fontify-whole-heading-line t
+      org-fontify-done-headline t
+      org-fontify-quote-and-verse-blocks t)
 #+end_src
 
 *** Org Bullets
@@ -201,7 +206,7 @@ the eye. It also has built in compatability with a large range of additional pac
 
 *** Neotree
 
-[[neotree][file:http://i.imgur.com/IhRePTI.jpg]]
+[[neotree][file:http://i.imgur.com/Tcw6QpF.jpg]]
 
 [[https://www.emacswiki.org/emacs/NeoTree][Neotree]] is a file tree display which is similar to the ones found in other popular text
 editors and IDEs (such as Sublime, Atom, Eclipse or nerdTREE if you use vim). It allows
@@ -211,6 +216,17 @@ you to neatly view your file structure at the side of your screen.
 (use-package neotree
   :config
   (global-set-key [f8] 'neotree-toggle))
+#+end_src
+
+This comes with my colorscheme so I set =ensure= to =nil= so it doesn't go looking on
+melpa. The file icons all come from the [[https://github.com/domtronn/all-the-icons.el][all the icons]] fonts (it doesn't actually use all
+the icons itself.
+
+#+begin_src emacs-lisp :tangle yes 
+(use-package doom-neotree
+  :ensure nil
+  :config
+  (setq doom-neotree-enable-file-icons t))
 #+end_src
 
 ** Company Mode
