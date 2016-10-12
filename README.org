@@ -300,3 +300,9 @@ with a flat structure rather rather than folder trees.
     (make-directory "~/.bak.emacs/auto"))
 (setq auto-save-file-name-transforms '((".*" "~/.bak.emacs/auto/" t)))
 #+end_src
+** Tesing / The Lab
+
+#+begin_src emacs-lisp :tangle yes 
+(if (eq t (file-exists-p "~/.emacs.d/lisp/the-lab.el"))
+    (load-file "~/.emacs.d/lisp/the-lab.el"))
+#+end_src 
